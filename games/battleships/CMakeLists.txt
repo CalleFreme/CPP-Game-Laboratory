@@ -1,0 +1,2 @@
+add_subdirectory(battleships_good)
+add_subdirectory(battleships_buggy)
