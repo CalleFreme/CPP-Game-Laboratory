@@ -48,12 +48,12 @@ You must list at least:
 - Fix approach:
 
 ### Bug 2
-- Symptom:
-- Steps to reproduce (exact inputs):
-- Expected (spec):
-- Actual:
-- Suspected root cause (file/function):
-- Fix approach:
+- Symptom: Placing ships gave poor feedback
+- Steps to reproduce (exact inputs): Place out of bounds or over other ship
+- Expected (spec): Descriptive error message
+- Actual: Non descriptive generic error message
+- Suspected root cause (file/function): place ship returned bool not enum
+- Fix approach: have place ship return PlaceResult Enum
 
 ### Bug 3
 - Symptom:
