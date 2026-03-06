@@ -1,9 +1,9 @@
 ﻿# Battleships Buggy Lab — Answers
 
 ## Team
-- Team name:
-- Partner A:
-- Partner B:
+- Team name: Team 01
+- Partner A: Linus Zackrisson Andersson
+- Partner B: Shaun Milligan
 
 ---
 
