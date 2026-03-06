@@ -1,3 +1,6 @@
+games/battleships/battleships_buggy/.idea/
+games/battleships/battleships_buggy/.idea/.idea.battleships_buggy/idea/indexLayout.html
+
 # Prerequisites
 *.d
 
@@ -530,3 +533,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+*.xml
+games/battleships/battleships_buggy/vs/battleships_buggy/.idea/.idea.battleships_buggy/.idea/indexLayout.xml
+/games/battleships/battleships_buggy/vs/battleships_buggy/.idea/.idea.battleships_buggy/.idea
