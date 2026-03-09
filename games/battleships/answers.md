@@ -61,21 +61,23 @@ You must list at least:
 
 ### Bug 3
 
-- Symptom:
-- Steps to reproduce (exact inputs):
-- Expected (spec):
-- Actual:
-- Suspected root cause (file/function):
-- Fix approach:
+- Symptom: Tracking board tracked incorrectly
+- Steps to reproduce (exact inputs): Place all the ships down for both players, Player1 hits Player2 on F1, Player2 hits Player1 on A1. When it's Player1's turn, Player1 will not see his hits on Player2 in the tracking board and Player2 won't see his hits on the tracking board.
+- Expected (spec): For Player1 and Player2 to see whether they've hit a ship on the tracking board.
+- Actual: Player1 and Player2 can't see their hits on the tracking board.
+- Suspected root cause (file/function): Game.cpp, ShootAtOpponent();
+- Fix approach: Change CurrentPlayerMut().tracking.SetCell(c, Cell::Ship); to: CurrentPlayerMut().tracking.SetCell(c, Cell::Hit);
+            
+            
 
 ### Bug 4
 
-- Symptom:
-- Steps to reproduce (exact inputs):
-- Expected (spec):
-- Actual:
-- Suspected root cause (file/function):
-- Fix approach:
+- Symptom: Wrong player wins
+- Steps to reproduce (exact inputs): Place all ships down, keep shooting until someone wins.
+- Expected (spec): For Player1 to win if he has shot all of Player2's ships.
+- Actual: Player2 wins, even though Player1 shot all of his ships.
+- Suspected root cause (file/function): Game.cpp, ShootAtOpponent();
+- Fix approach: Change if (CurrentPlayer().own.AllShipsSunk()) to: if (OtherPlayer().own.AllShipsSunk())
 
 ### Bug 5
 

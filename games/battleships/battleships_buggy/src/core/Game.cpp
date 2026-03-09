@@ -52,20 +52,22 @@ namespace bs {
 
         ShotResult r = OtherPlayerMut().own.Shoot(c);
 
-        // BUG: tracking board update is wrong: we mark Hit cells as Ship instead of Hit.
+        // BUG: tracking board update is wrong: we mark Hit cells as Ship instead of Hit. - FIXED
         if (r == ShotResult::Miss)
             CurrentPlayerMut().tracking.SetCell(c, Cell::Miss);
         else if (r == ShotResult::Hit || r == ShotResult::Sunk)
-            CurrentPlayerMut().tracking.SetCell(c, Cell::Ship); // BUG: should be Hit
+            // It was obvious because you said the solution
+            CurrentPlayerMut().tracking.SetCell(c, Cell::Hit); // BUG: should be Hit
 
-        // BUG: win check uses current player's own board instead of opponent's board
-        if (CurrentPlayer().own.AllShipsSunk())
+        // BUG: win check uses current player's own board instead of opponent's board - FIXED
+        // Change to OtherPlayer instead of CurrentPlayer
+        if (OtherPlayer().own.AllShipsSunk())
         {
             m_state = GameState::GameOver;
-            m_winner = m_current; // BUG: declares shooter winner based on wrong check
+            // We don't need to change because current player should be the winner if the other players ships have been sunk.
+            m_winner = m_current; // BUG: declares shooter winner based on wrong check - FIXED
             return r;
         }
-
         AdvanceTurn();
         return r;
     }
