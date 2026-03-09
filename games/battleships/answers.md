@@ -81,12 +81,12 @@ You must list at least:
 
 ### Bug 5
 
-- Symptom:
-- Steps to reproduce (exact inputs):
-- Expected (spec):
-- Actual:
-- Suspected root cause (file/function):
-- Fix approach:
+- Symptom: Input not reaching type Command::Place
+- Steps to reproduce (exact inputs): input during placement and logic from shoot is parsed in the command parser
+- Expected (spec): Better handling of input 
+- Actual: unexpected placement of ships during placement
+- Suspected root cause (file/function): bad code smell and if statements. Used game state to qualify input
+- Fix approach: Feature would better handle input issues. Fixed a few issues where the default would be to 0,0 for ship placement.
 
 ### Bug 6
 

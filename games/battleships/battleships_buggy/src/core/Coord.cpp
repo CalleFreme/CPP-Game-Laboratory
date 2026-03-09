@@ -20,7 +20,7 @@ namespace bs {
         // - if no letters, x becomes 0
         // - negative values can slip through if user writes "-1" (bug)
         std::string s = StripSpaces(text);
-        if (s.empty()) return { 0,0 };
+        if (s.empty()) return { -1,-1 };
 
         int x = 0;
         int y = 0;
@@ -43,7 +43,7 @@ namespace bs {
         std::string digits;
         for (char ch : s)
         {
-            if (std::isdigit(static_cast<unsigned char>(ch)) || ch == '-') // BUG: '-' allowed anywhere
+            if (std::isdigit(static_cast<unsigned char>(ch))) // BUG Fixed: '-' allowed anywhere; removed -
                 digits.push_back(ch);
         }
 
@@ -56,11 +56,11 @@ namespace bs {
             }
             catch (...)
             {
-                y = 0; // BUG: swallows errors
+                y = -1; // BUG: swallows errors
             }
         }
 
-        if (!hasLetter && !hasDigit) return { 0,0 };
+        if (!hasLetter && !hasDigit) return { -1,-1 };
         return { x, y };
     }
 

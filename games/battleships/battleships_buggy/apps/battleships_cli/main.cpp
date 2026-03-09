@@ -13,6 +13,8 @@ static void PrintHelp()
         "  help                - show this help\n"
         "  quit                - quit game\n"
         "  reveal              - toggle reveal ships on your own board (debug)\n"
+        "  During Placement:\n"
+        "    place A1 v        - places first ship at A1 vertically\n"
         "  During play:\n"
         "    shoot A5           - shoot coordinate\n"
         "    or just: A5\n\n";
@@ -69,7 +71,7 @@ int main()
 
             std::string line;
             std::getline(std::cin, line);
-            Command cmd = ParseCommandLoose(line);
+            Command cmd = ParseCommandLoose(line, game.State());
             if (cmd.type == CommandType::Quit) break;
             if (cmd.type == CommandType::Help)
             {
@@ -78,15 +80,23 @@ int main()
                 std::getline(std::cin, line);
                 continue;
             }
+            // check here if command is of type place
+            Command setupCmd = ParseCommandLoose(line, game.State());
+            // Coord start = (cmd.type == CommandType::Shoot) ? cmd.shootTarget : ParseCoordLoose(line);
+            // Orientation o = AskOrientation()
 
-            Coord start = (cmd.type == CommandType::Shoot) ? cmd.shootTarget : ParseCoordLoose(line);
-            Orientation o = AskOrientation();
-
-            PlaceResult pr = game.PlaceShipForCurrent(Ship{ length, start, o });
+            PlaceResult pr = game.PlaceShipForCurrent(Ship{ length, setupCmd.placeStart, setupCmd.placeOrientation });
             if (pr != PlaceResult::Ok)
             {
-                // BUG: not informative (spec asks to distinguish OutOfBounds vs Overlap).
-                std::cout << "Could not place ship. (buggy message, no detail)\n";
+                // FIXED BUG: not informative (spec asks to distinguish OutOfBounds vs Overlap).
+                if (pr == PlaceResult::OutOfBounds)
+                {
+                    std::cout << "Could not place ship. Ship out of bounds.\n";
+                }
+                else if (pr == PlaceResult::Overlap)
+                {
+                    std::cout << "Could not place ship. Ship overlaps with existing Ship.\n";
+                }
                 std::cout << "Press Enter...\n";
                 std::getline(std::cin, line);
             }
@@ -107,7 +117,7 @@ int main()
             std::string line;
             std::getline(std::cin, line);
 
-            Command cmd = ParseCommandLoose(line);
+            Command cmd = ParseCommandLoose(line, game.State());
             if (cmd.type == CommandType::Quit) break;
             if (cmd.type == CommandType::Help)
             {

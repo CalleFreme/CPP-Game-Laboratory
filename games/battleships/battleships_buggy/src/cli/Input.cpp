@@ -5,6 +5,8 @@
 #include <sstream>
 #include <vector>
 
+#include "core/Game.h"
+
 namespace bs {
 
     static std::string ToLower(std::string s)
@@ -23,7 +25,7 @@ namespace bs {
         return parts;
     }
 
-    Command ParseCommandLoose(const std::string& line)
+    Command ParseCommandLoose(const std::string& line, const GameState& gameState)
     {
         Command cmd;
         cmd.raw = line;
@@ -50,7 +52,7 @@ namespace bs {
 
         // Shoot: "shoot A5" or just "A5"
         // NOTE: Intentionally permissive (and a bit wrong): most inputs become Shoot.
-        if (head == "shoot" || !head.empty())
+        if ((head == "shoot" || !head.empty()) && gameState == GameState::Playing)
         {
             std::string coordText = (head == "shoot" && parts.size() >= 2) ? parts[1] : parts[0];
             cmd.type = CommandType::Shoot;
@@ -60,12 +62,12 @@ namespace bs {
 
         // Place command exists but is effectively unreachable here (intentional smell/bug).
         // Setup in main asks separately for orientation anyway.
-        if (head == "place" && parts.size() >= 4)
+        if (head == "place" && parts.size() >= 3)
         {
             cmd.type = CommandType::Place;
             cmd.placeStart = ParseCoordLoose(parts[1]);
             cmd.placeOrientation = (ToLower(parts[2]).rfind("v", 0) == 0) ? Orientation::Vertical : Orientation::Horizontal;
-            cmd.placeLength = std::max(1, std::stoi(parts[3]));
+            // cmd.placeLength = std::max(1, std::stoi(parts[3]));
             return cmd;
         }
 

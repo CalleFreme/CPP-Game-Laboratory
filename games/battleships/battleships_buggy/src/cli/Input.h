@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Coord.h"
+#include "core/Game.h"
 #include "core/Enums.h"
 #include <string>
 
@@ -30,6 +31,6 @@ namespace bs {
         std::string raw;
     };
 
-    Command ParseCommandLoose(const std::string& line);
+    Command ParseCommandLoose(const std::string& line, const GameState& gameState);
 
 } // namespace bs
