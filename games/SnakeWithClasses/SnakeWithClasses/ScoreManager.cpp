@@ -107,6 +107,12 @@ void ScoreManager::AddScore(int score, const std::string& username)
 	{
 		++insertIndex;
 	}
+	/*
+	m_scores = { 5, 10, 17, 2 }
+	AddScore( 11 );
+	m_scores = { 5, 10,[], 17, 2 }
+
+	*/
 
 	// At this point we've found where to insert the new score
 	if (m_count < MaxScores)

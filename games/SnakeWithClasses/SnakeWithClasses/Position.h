@@ -8,7 +8,5 @@ struct Position
 
 inline bool operator==(const Position& a, const Position& b)
 {
-	return a.x == b.x && a.y == b.y; // True AND/&& True = True
-	// True AND False = False
-	// False AND False = False
+	return a.x == b.x && a.y == b.y;
 }

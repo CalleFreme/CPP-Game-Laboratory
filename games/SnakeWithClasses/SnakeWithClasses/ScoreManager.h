@@ -16,6 +16,7 @@ struct Highscore
 	{
 		return score > other.score;
 	}
+
 };
 
 class ScoreManager

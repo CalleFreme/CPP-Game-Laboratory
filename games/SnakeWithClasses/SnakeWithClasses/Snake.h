@@ -12,7 +12,7 @@ public:
 	Direction Dir() const { return m_dir; }
 
 	// The direction that wil be applied on next Move()
-	Direction NextDir() const { return m_dir; }
+	Direction NextDir() const { return m_nextDir; }
 
 	void SetNextDirection(Direction d);
 

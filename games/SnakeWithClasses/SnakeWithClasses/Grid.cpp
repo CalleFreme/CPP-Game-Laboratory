@@ -31,18 +31,23 @@ void Grid::Clear()
 void Grid::SetCell(Position p, char c)
 {
 	if (!InBounds(p)) return;
-	m_cells[static_cast<size_t>(ToIndex(p))] = c;
+	size_t idx = static_cast<size_t>(ToIndex(p));
+	m_cells[idx] = c;
 }
 
 char Grid::GetCell(Position p) const
 {
 	if (!InBounds(p)) return m_empty;
-	return m_cells[static_cast<size_t>(ToIndex(p))];
+	size_t idx = static_cast<size_t>(ToIndex(p));
+	return m_cells[idx];
 }
 
 std::string Grid::ToString() const
 {
 	std::string s;
+	// reserve() pre-allocates capacity for the string.
+	// So, doesn't have to keep reallocating and copying as we append
+	// lots of character in the loop.
 	s.reserve(static_cast<size_t>((m_width * 2 + 1) * m_height + 64));
 
 	s += "\n";

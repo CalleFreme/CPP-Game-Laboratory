@@ -2,7 +2,7 @@
 #include <iostream>
 
 Game::Game()
-	: m_grid(16, 12, '.')
+	: m_grid(16, 12, '.') // Create Grid instance
 	, m_scores("scores.txt") // Creates a ScoreManager instance
 	, m_rng(std::random_device{}())
 {
@@ -37,6 +37,7 @@ void Game::Run()
 
 		case State::Help:
 			RenderHelp();
+			// (void)functionName means we're not using its return value
 			(void)ReadCommand("Press Enter to return to menu...");
 			m_state = State::MainMenu;
 			break;
@@ -101,23 +102,24 @@ void Game::UpdatePlaying(char command)
 		m_snake.SetNextDirection(d);
 
 	// Predict next head position, to decide growth and check wall collision
-	Position next = m_snake.Head();
-	switch (m_snake.Dir())
+	Position newHeadPos = m_snake.Head();
+	Direction travelDir = m_snake.NextDir();
+	switch (travelDir)
 	{
-	case Direction::Up:		next.y -= 1; break;
-	case Direction::Down:	next.y += 1; break;
-	case Direction::Left:	next.x -= 1; break;
-	case Direction::Right:	next.x += 1; break;
+	case Direction::Up:		newHeadPos.y -= 1; break;
+	case Direction::Down:	newHeadPos.y += 1; break;
+	case Direction::Left:	newHeadPos.x -= 1; break;
+	case Direction::Right:	newHeadPos.x += 1; break;
 	}
 
 	// Wall collision = death in classic snake
-	if (!gameCfg.wrapMode && !m_grid.InBounds(next))
+	if (!gameCfg.wrapMode && !m_grid.InBounds(newHeadPos))
 	{
 		m_alive = false;
 	}
 	else
 	{
-		const bool willGrow = (next == m_food);
+		const bool willGrow = (newHeadPos == m_food); // Are we on food?
 		m_snake.Move(willGrow);
 
 		// Self collision
